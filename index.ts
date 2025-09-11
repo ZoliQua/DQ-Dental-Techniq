@@ -9,3 +9,17 @@ export type {
   LabWorkOrderItemInput,
   LabWorkOrderStatusChange,
 } from './types';
+
+export {
+  fetchLabPartners,
+  createLabPartner,
+  updateLabPartner,
+  deleteLabPartner,
+  fetchLabWorkOrders,
+  fetchLabWorkOrder,
+  fetchPatientLabWorkOrders,
+  createLabWorkOrder,
+  updateLabWorkOrder,
+  changeLabWorkOrderStatus,
+  deleteLabWorkOrder,
+} from './api';
