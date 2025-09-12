@@ -23,3 +23,5 @@ export {
   changeLabWorkOrderStatus,
   deleteLabWorkOrder,
 } from './api';
+
+export { LabPartnersPage } from './pages/LabPartnersPage';
