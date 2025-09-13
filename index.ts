@@ -25,3 +25,5 @@ export {
 } from './api';
 
 export { LabPartnersPage } from './pages/LabPartnersPage';
+export { LabWorkOrderEditorPage } from './pages/LabWorkOrderEditorPage';
+export { useLabWorkOrders } from './hooks/useLabWorkOrders';
