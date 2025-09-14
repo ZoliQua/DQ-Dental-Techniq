@@ -25,5 +25,7 @@ export {
 } from './api';
 
 export { LabPartnersPage } from './pages/LabPartnersPage';
+export { LabWorkOrdersPage } from './pages/LabWorkOrdersPage';
 export { LabWorkOrderEditorPage } from './pages/LabWorkOrderEditorPage';
+export { LabWorkOrderStatusBadge } from './components/LabWorkOrderStatusBadge';
 export { useLabWorkOrders } from './hooks/useLabWorkOrders';
