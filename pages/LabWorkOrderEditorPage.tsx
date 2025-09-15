@@ -15,6 +15,7 @@ import {
 } from '../../../components/common';
 import { formatCurrency, formatPatientName } from '../../../utils';
 import { useLabWorkOrders } from '../hooks/useLabWorkOrders';
+import { generateWorksheetPdf } from '../components/PrintableWorksheet';
 import type { LabWorkOrderInput, LabWorkOrderItemInput, LabWorkOrder } from '../types';
 
 const SHADE_OPTIONS = [
@@ -36,7 +37,7 @@ const emptyItem: LabWorkOrderItemInput = {
 export function LabWorkOrderEditorPage() {
   const { workOrderId } = useParams<{ workOrderId: string }>();
   const navigate = useNavigate();
-  const { t } = useSettings();
+  const { t, settings } = useSettings();
   const { patients } = usePatients();
   const { partners, loadPartners, getWorkOrder, create, update } = useLabWorkOrders();
 
@@ -468,6 +469,35 @@ export function LabWorkOrderEditorPage() {
         <Button variant="secondary" onClick={() => navigate('/lab')}>
           {t.common.cancel}
         </Button>
+        {isEditing && existingOrder && selectedPatient && (
+          <Button
+            variant="secondary"
+            onClick={() =>
+              generateWorksheetPdf({
+                order: existingOrder,
+                patient: {
+                  lastName: selectedPatient.lastName,
+                  firstName: selectedPatient.firstName,
+                  title: selectedPatient.title ?? undefined,
+                  birthDate: selectedPatient.birthDate ? String(selectedPatient.birthDate) : undefined,
+                  phone: selectedPatient.phone ?? undefined,
+                },
+                clinic: {
+                  name: settings?.clinic?.name ?? '',
+                  address: settings?.clinic?.address ?? '',
+                  phone: settings?.clinic?.phone ?? '',
+                  email: settings?.clinic?.email ?? '',
+                  logo: settings?.clinic?.logo,
+                  showLogoOnQuote: settings?.clinic?.showLogoOnQuote,
+                },
+                doctorName: existingOrder.doctorId ?? undefined,
+                pdfFont: settings?.pdf?.pdfFont,
+              })
+            }
+          >
+            {t.lab?.printWorksheet ?? 'Munkalap nyomtatása'}
+          </Button>
+        )}
         <Button onClick={handleSave} disabled={!canSave || saving}>
           {saving
             ? (t.common.saving ?? 'Mentés...')

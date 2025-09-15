@@ -28,4 +28,5 @@ export { LabPartnersPage } from './pages/LabPartnersPage';
 export { LabWorkOrdersPage } from './pages/LabWorkOrdersPage';
 export { LabWorkOrderEditorPage } from './pages/LabWorkOrderEditorPage';
 export { LabWorkOrderStatusBadge } from './components/LabWorkOrderStatusBadge';
+export { generateWorksheetPdf } from './components/PrintableWorksheet';
 export { useLabWorkOrders } from './hooks/useLabWorkOrders';
