@@ -66,7 +66,7 @@ export function LabPartnersPage() {
   };
 
   const handleDelete = async (partner: LabPartner) => {
-    if (!confirm(t.common.deleteConfirm ?? 'Biztosan törli?')) return;
+    if (!confirm(t.lab?.deleteConfirm ?? 'Biztosan törli?')) return;
     await deleteLabPartner(partner.labPartnerId);
     load();
   };
@@ -112,7 +112,7 @@ export function LabPartnersPage() {
                       {t.lab?.email ?? 'Email'}
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-theme-tertiary uppercase">
-                      {t.common?.status ?? 'Státusz'}
+                      {t.lab?.status ?? 'Státusz'}
                     </th>
                     <th className="px-4 py-3 text-right text-xs font-medium text-theme-tertiary uppercase">
                       {t.common.actions}

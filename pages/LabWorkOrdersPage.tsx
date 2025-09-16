@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSettings } from '../../../context/SettingsContext';
 import { usePatients } from '../../../hooks';
-import { Button, Card, CardContent, CardHeader, Select } from '../../../components/common';
+import { Button, Card, CardContent, Select } from '../../../components/common';
 import { formatCurrency, formatDate, formatPatientName } from '../../../utils';
 import { useLabWorkOrders } from '../hooks/useLabWorkOrders';
 import { LabWorkOrderStatusBadge } from '../components/LabWorkOrderStatusBadge';
@@ -218,7 +218,7 @@ export function LabWorkOrdersPage() {
                       className="px-4 py-3 text-left text-xs font-medium text-theme-tertiary uppercase cursor-pointer select-none"
                       onClick={() => toggleSort('status')}
                     >
-                      {t.common?.status ?? 'Státusz'} <SortIcon col="status" />
+                      {t.lab?.status ?? 'Státusz'} <SortIcon col="status" />
                     </th>
                     <th
                       className="px-4 py-3 text-left text-xs font-medium text-theme-tertiary uppercase cursor-pointer select-none"

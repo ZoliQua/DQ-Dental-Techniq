@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSettings } from '../../../context/SettingsContext';
 import { usePatients } from '../../../hooks';
@@ -11,7 +11,6 @@ import {
   Input,
   TextArea,
   Select,
-  Modal,
 } from '../../../components/common';
 import { formatCurrency, formatPatientName } from '../../../utils';
 import { useLabWorkOrders } from '../hooks/useLabWorkOrders';
@@ -500,7 +499,7 @@ export function LabWorkOrderEditorPage() {
         )}
         <Button onClick={handleSave} disabled={!canSave || saving}>
           {saving
-            ? (t.common.saving ?? 'Mentés...')
+            ? (t.lab?.saving ?? 'Mentés...')
             : isEditing
               ? (t.common.save ?? 'Mentés')
               : (t.lab?.createWorkOrder ?? 'Munkalap létrehozása')}

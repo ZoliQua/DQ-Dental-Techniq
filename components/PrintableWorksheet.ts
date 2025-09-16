@@ -175,7 +175,6 @@ export async function generateWorksheetPdf(data: WorksheetData): Promise<void> {
   y += 7;
 
   // Attachments checkboxes
-  const cbStartY = y;
   checkbox(order.upperImpression, 'Felső lenyomat', margin, y);
   checkbox(order.lowerImpression, 'Alsó lenyomat', margin + 40, y);
   checkbox(order.bite, 'Harapás', margin + 80, y);
