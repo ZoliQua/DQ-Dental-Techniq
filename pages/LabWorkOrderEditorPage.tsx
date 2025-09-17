@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { useSettings } from '../../../context/SettingsContext';
 import { usePatients } from '../../../hooks';
 import {
@@ -35,6 +35,7 @@ const emptyItem: LabWorkOrderItemInput = {
 
 export function LabWorkOrderEditorPage() {
   const { workOrderId } = useParams<{ workOrderId: string }>();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { t, settings } = useSettings();
   const { patients } = usePatients();
@@ -46,8 +47,8 @@ export function LabWorkOrderEditorPage() {
   const [saving, setSaving] = useState(false);
   const [existingOrder, setExistingOrder] = useState<LabWorkOrder | null>(null);
 
-  // Form state
-  const [patientId, setPatientId] = useState('');
+  // Form state — pre-fill patientId from query param (e.g. /lab/new?patientId=xxx)
+  const [patientId, setPatientId] = useState(searchParams.get('patientId') || '');
   const [labPartnerId, setLabPartnerId] = useState('');
   const [priority, setPriority] = useState<'normal' | 'urgent'>('normal');
   const [toothNotation, setToothNotation] = useState('');
