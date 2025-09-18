@@ -1,0 +1,151 @@
+// ─── DQ-Dental-Techniq Standalone — Prisma Schema ─────────────────
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Auth ──────────────────────────────────────────────────────────
+
+enum UserRole {
+  admin
+  technician
+  receptionist
+}
+
+model LabUser {
+  userId       String        @id
+  email        String        @unique
+  fullName     String
+  passwordHash String
+  role         UserRole      @default(technician)
+  isActive     Boolean       @default(true)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  sessions     AuthSession[]
+  workOrders   LabWorkOrder[] @relation("CreatedBy")
+
+  @@map("lab_users")
+}
+
+model AuthSession {
+  sessionId  String    @id
+  tokenHash  String    @unique
+  userId     String
+  user       LabUser   @relation(fields: [userId], references: [userId])
+  expiresAt  DateTime
+  revokedAt  DateTime?
+  lastSeenAt DateTime  @default(now())
+  userAgent  String?
+  ipAddress  String?
+  createdAt  DateTime  @default(now())
+
+  @@index([userId])
+  @@map("auth_sessions")
+}
+
+// ─── Üzleti modellek ──────────────────────────────────────────────
+
+model DoctorPartner {
+  doctorPartnerId String   @id
+  doctorName      String
+  clinicName      String?
+  contactName     String?
+  phone           String?
+  email           String?
+  address         String?
+  taxNumber       String?
+  notes           String?
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  workOrders LabWorkOrder[]
+
+  @@map("doctor_partners")
+}
+
+model LabPatient {
+  patientId   String   @id
+  lastName    String
+  firstName   String
+  birthDate   String?
+  phone       String?
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  workOrders LabWorkOrder[]
+
+  @@map("lab_patients")
+}
+
+enum LabWorkOrderStatus {
+  draft
+  sent
+  in_progress
+  ready
+  delivered
+  accepted
+  revision
+  cancelled
+}
+
+model LabWorkOrder {
+  workOrderId     String             @id
+  workOrderNumber String             @unique
+  patientId       String
+  patient         LabPatient         @relation(fields: [patientId], references: [patientId])
+  doctorPartnerId String
+  doctorPartner   DoctorPartner      @relation(fields: [doctorPartnerId], references: [doctorPartnerId])
+  status          LabWorkOrderStatus @default(draft)
+  priority        String             @default("normal")
+  toothNotation   String?
+  shade           String?
+  material        String?
+  upperImpression Boolean            @default(false)
+  lowerImpression Boolean            @default(false)
+  bite            Boolean            @default(false)
+  facebow         Boolean            @default(false)
+  photos          Boolean            @default(false)
+  notes           String?
+  labNotes        String?
+  requestedDeadline DateTime?
+  promisedDeadline  DateTime?
+  sentAt          DateTime?
+  receivedAt      DateTime?
+  totalPrice      Float?
+  currency        String             @default("HUF")
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+  createdByUserId String?
+  createdBy       LabUser?           @relation("CreatedBy", fields: [createdByUserId], references: [userId])
+
+  items LabWorkOrderItem[]
+
+  @@index([patientId])
+  @@index([doctorPartnerId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("lab_work_orders")
+}
+
+model LabWorkOrderItem {
+  itemId      String       @id
+  workOrderId String
+  workOrder   LabWorkOrder @relation(fields: [workOrderId], references: [workOrderId], onDelete: Cascade)
+  description String
+  tooth       String?
+  quantity    Int          @default(1)
+  unitPrice   Float?
+  totalPrice  Float?
+  sortOrder   Int          @default(0)
+
+  @@index([workOrderId])
+  @@map("lab_work_order_items")
+}
