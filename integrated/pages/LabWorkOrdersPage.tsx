@@ -1,12 +1,12 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSettings } from '../../../context/SettingsContext';
-import { usePatients } from '../../../hooks';
-import { Button, Card, CardContent, Select } from '../../../components/common';
-import { formatCurrency, formatDate, formatPatientName } from '../../../utils';
+import { useSettings } from '../../../../context/SettingsContext';
+import { usePatients } from '../../../../hooks';
+import { Button, Card, CardContent, Select } from '../../../../components/common';
+import { formatCurrency, formatDate, formatPatientName } from '../../../../utils';
 import { useLabWorkOrders } from '../hooks/useLabWorkOrders';
-import { LabWorkOrderStatusBadge } from '../components/LabWorkOrderStatusBadge';
-import type { LabWorkOrderStatus } from '../types';
+import { LabWorkOrderStatusBadge } from '../../shared/LabWorkOrderStatusBadge';
+import type { LabWorkOrderStatus } from '../../core/types';
 
 type SortKey = 'workOrderNumber' | 'patient' | 'labPartner' | 'status' | 'deadline' | 'total' | 'createdAt';
 type SortDir = 'asc' | 'desc';

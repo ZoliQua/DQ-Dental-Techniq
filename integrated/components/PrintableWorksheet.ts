@@ -1,8 +1,8 @@
 import jsPDF from 'jspdf';
-import { registerPdfFonts } from '../../../components/pdf/pdfFonts';
-import { toPdfText, formatPdfDate } from '../../../components/pdf/pdfUtils';
-import { formatCurrency, formatPatientName } from '../../../utils';
-import type { LabWorkOrder, LabWorkOrderItem } from '../types';
+import { registerPdfFonts } from '../../../../components/pdf/pdfFonts';
+import { toPdfText, formatPdfDate } from '../../../../components/pdf/pdfUtils';
+import { formatCurrency, formatPatientName } from '../../../../utils';
+import type { LabWorkOrder, LabWorkOrderItem } from '../../core/types';
 
 interface WorksheetData {
   order: LabWorkOrder;

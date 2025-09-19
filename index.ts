@@ -1,3 +1,4 @@
+// ─── Core types (shared between standalone and integrated modes) ──
 export type {
   LabWorkOrderStatus,
   LabWorkOrderPriority,
@@ -8,8 +9,14 @@ export type {
   LabWorkOrderInput,
   LabWorkOrderItemInput,
   LabWorkOrderStatusChange,
-} from './types';
+} from './core/types';
 
+export { ALL_STATUSES, SHADE_OPTIONS } from './core/constants';
+
+// ─── Shared components ───────────────────────────────────────────
+export { LabWorkOrderStatusBadge } from './shared/LabWorkOrderStatusBadge';
+
+// ─── Integrated mode (submodule in DentalQuoteCreator) ───────────
 export {
   fetchLabPartners,
   createLabPartner,
@@ -22,11 +29,10 @@ export {
   updateLabWorkOrder,
   changeLabWorkOrderStatus,
   deleteLabWorkOrder,
-} from './api';
+} from './integrated/api';
 
-export { LabPartnersPage } from './pages/LabPartnersPage';
-export { LabWorkOrdersPage } from './pages/LabWorkOrdersPage';
-export { LabWorkOrderEditorPage } from './pages/LabWorkOrderEditorPage';
-export { LabWorkOrderStatusBadge } from './components/LabWorkOrderStatusBadge';
-export { generateWorksheetPdf } from './components/PrintableWorksheet';
-export { useLabWorkOrders } from './hooks/useLabWorkOrders';
+export { LabPartnersPage } from './integrated/pages/LabPartnersPage';
+export { LabWorkOrdersPage } from './integrated/pages/LabWorkOrdersPage';
+export { LabWorkOrderEditorPage } from './integrated/pages/LabWorkOrderEditorPage';
+export { generateWorksheetPdf } from './integrated/components/PrintableWorksheet';
+export { useLabWorkOrders } from './integrated/hooks/useLabWorkOrders';

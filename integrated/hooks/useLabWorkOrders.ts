@@ -14,7 +14,7 @@ import type {
   LabWorkOrder,
   LabWorkOrderInput,
   LabWorkOrderStatusChange,
-} from '../types';
+} from '../../core/types';
 
 export function useLabWorkOrders() {
   const [workOrders, setWorkOrders] = useState<LabWorkOrder[]>([]);

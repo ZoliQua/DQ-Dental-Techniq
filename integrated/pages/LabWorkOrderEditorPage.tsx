@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
-import { useSettings } from '../../../context/SettingsContext';
-import { usePatients } from '../../../hooks';
+import { useSettings } from '../../../../context/SettingsContext';
+import { usePatients } from '../../../../hooks';
 import {
   Button,
   Card,
@@ -11,11 +11,11 @@ import {
   Input,
   TextArea,
   Select,
-} from '../../../components/common';
-import { formatCurrency, formatPatientName } from '../../../utils';
+} from '../../../../components/common';
+import { formatCurrency, formatPatientName } from '../../../../utils';
 import { useLabWorkOrders } from '../hooks/useLabWorkOrders';
 import { generateWorksheetPdf } from '../components/PrintableWorksheet';
-import type { LabWorkOrderInput, LabWorkOrderItemInput, LabWorkOrder } from '../types';
+import type { LabWorkOrderInput, LabWorkOrderItemInput, LabWorkOrder } from '../../core/types';
 
 const SHADE_OPTIONS = [
   'A1','A2','A3','A3.5','A4',

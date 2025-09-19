@@ -1,11 +1,11 @@
-import { getAuthHeaders } from '../../utils/auth';
+import { getAuthHeaders } from '../../../utils/auth';
 import type {
   LabPartner,
   LabPartnerInput,
   LabWorkOrder,
   LabWorkOrderInput,
   LabWorkOrderStatusChange,
-} from './types';
+} from '../core/types';
 
 const BASE = '/backend';
 

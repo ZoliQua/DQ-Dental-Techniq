@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useSettings } from '../../../context/SettingsContext';
-import { Button, Card, CardContent, CardHeader, Input, Modal } from '../../../components/common';
+import { useSettings } from '../../../../context/SettingsContext';
+import { Button, Card, CardContent, CardHeader, Input, Modal } from '../../../../components/common';
 import { fetchLabPartners, createLabPartner, updateLabPartner, deleteLabPartner } from '../api';
-import type { LabPartner, LabPartnerInput } from '../types';
+import type { LabPartner, LabPartnerInput } from '../../core/types';
 
 const emptyForm: LabPartnerInput = {
   labName: '',

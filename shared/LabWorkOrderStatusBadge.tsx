@@ -1,4 +1,4 @@
-import type { LabWorkOrderStatus } from '../types';
+import type { LabWorkOrderStatus } from '../core/types';
 
 const STATUS_STYLES: Record<LabWorkOrderStatus, string> = {
   draft: 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-200',
