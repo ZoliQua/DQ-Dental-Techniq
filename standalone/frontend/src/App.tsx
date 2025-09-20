@@ -4,6 +4,7 @@ import { Layout } from './components/Layout';
 import { LoginPage } from './pages/LoginPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { WorkOrdersPage } from './pages/WorkOrdersPage';
+import { WorkOrderEditorPage } from './pages/WorkOrderEditorPage';
 import { DoctorPartnersPage } from './pages/DoctorPartnersPage';
 import { PatientsPage } from './pages/PatientsPage';
 
@@ -32,6 +33,8 @@ export function App() {
       <Routes>
         <Route path="/" element={<DashboardPage />} />
         <Route path="/work-orders" element={<WorkOrdersPage />} />
+        <Route path="/work-orders/new" element={<WorkOrderEditorPage />} />
+        <Route path="/work-orders/:workOrderId" element={<WorkOrderEditorPage />} />
         <Route path="/doctors" element={<DoctorPartnersPage />} />
         <Route path="/patients" element={<PatientsPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />

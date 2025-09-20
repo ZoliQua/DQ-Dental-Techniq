@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useI18n } from '../context/I18nContext';
 
 export function LoginPage() {
   const { login, register } = useAuth();
+  const { t } = useI18n();
   const [isRegister, setIsRegister] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -21,7 +23,7 @@ export function LoginPage() {
         await login(email, password);
       }
     } catch (err: any) {
-      setError(err.message || 'Hiba történt');
+      setError(err.message || t.auth.invalidCredentials);
     } finally {
       setLoading(false);
     }
@@ -37,71 +39,39 @@ export function LoginPage() {
 
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
           <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
-            {isRegister ? 'Regisztráció' : 'Bejelentkezés'}
+            {isRegister ? t.auth.register : t.auth.login}
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {isRegister && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Teljes név
-                </label>
-                <input
-                  type="text"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-dental-500"
-                  required
-                />
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t.auth.fullName}</label>
+                <input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-dental-500" required />
               </div>
             )}
-
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Email
-              </label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-dental-500"
-                required
-              />
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t.auth.email}</label>
+              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-dental-500" required />
             </div>
-
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Jelszó
-              </label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-dental-500"
-                required
-              />
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t.auth.password}</label>
+              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-dental-500" required />
             </div>
-
-            {error && (
-              <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
-            )}
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full py-2.5 bg-dental-600 hover:bg-dental-700 text-white font-medium rounded-lg transition-colors disabled:opacity-50"
-            >
-              {loading ? 'Kérem várjon...' : isRegister ? 'Regisztráció' : 'Bejelentkezés'}
+            {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
+            <button type="submit" disabled={loading}
+              className="w-full py-2.5 bg-dental-600 hover:bg-dental-700 text-white font-medium rounded-lg transition-colors disabled:opacity-50">
+              {loading ? t.common.wait : isRegister ? t.auth.register : t.auth.login}
             </button>
           </form>
 
           <p className="mt-4 text-center text-sm text-gray-500 dark:text-gray-400">
-            {isRegister ? 'Van már fiókja?' : 'Nincs még fiókja?'}{' '}
-            <button
-              onClick={() => { setIsRegister(!isRegister); setError(''); }}
-              className="text-dental-600 hover:text-dental-700 font-medium"
-            >
-              {isRegister ? 'Bejelentkezés' : 'Regisztráció'}
+            {isRegister ? t.auth.hasAccount : t.auth.noAccount}{' '}
+            <button onClick={() => { setIsRegister(!isRegister); setError(''); }}
+              className="text-dental-600 hover:text-dental-700 font-medium">
+              {isRegister ? t.auth.login : t.auth.register}
             </button>
           </p>
         </div>
