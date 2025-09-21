@@ -29,6 +29,7 @@ model LabUser {
   updatedAt    DateTime      @updatedAt
   sessions     AuthSession[]
   workOrders   LabWorkOrder[] @relation("CreatedBy")
+  invoices     LabInvoice[]   @relation("InvoiceCreatedBy")
 
   @@map("lab_users")
 }
@@ -66,6 +67,7 @@ model DoctorPartner {
   updatedAt       DateTime @updatedAt
 
   workOrders LabWorkOrder[]
+  invoices   LabInvoice[]
 
   @@map("doctor_partners")
 }
@@ -148,4 +150,53 @@ model LabWorkOrderItem {
 
   @@index([workOrderId])
   @@map("lab_work_order_items")
+}
+
+// ─── Számlázás ────────────────────────────────────────────────────
+
+enum InvoiceStatus {
+  draft
+  issued
+  paid
+  cancelled
+}
+
+model LabInvoice {
+  invoiceId       String        @id
+  invoiceNumber   String        @unique
+  doctorPartnerId String
+  doctorPartner   DoctorPartner @relation(fields: [doctorPartnerId], references: [doctorPartnerId])
+  status          InvoiceStatus @default(draft)
+  issueDate       DateTime      @default(now())
+  dueDate         DateTime?
+  paidAt          DateTime?
+  totalAmount     Float         @default(0)
+  currency        String        @default("HUF")
+  notes           String?
+  createdByUserId String?
+  createdBy       LabUser?      @relation("InvoiceCreatedBy", fields: [createdByUserId], references: [userId])
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  items LabInvoiceItem[]
+
+  @@index([doctorPartnerId])
+  @@index([status])
+  @@index([issueDate])
+  @@map("lab_invoices")
+}
+
+model LabInvoiceItem {
+  itemId       String     @id
+  invoiceId    String
+  invoice      LabInvoice @relation(fields: [invoiceId], references: [invoiceId], onDelete: Cascade)
+  workOrderId  String?
+  description  String
+  quantity     Int        @default(1)
+  unitPrice    Float
+  totalPrice   Float
+  sortOrder    Int        @default(0)
+
+  @@index([invoiceId])
+  @@map("lab_invoice_items")
 }

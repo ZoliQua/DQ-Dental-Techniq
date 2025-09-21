@@ -7,6 +7,9 @@ import { WorkOrdersPage } from './pages/WorkOrdersPage';
 import { WorkOrderEditorPage } from './pages/WorkOrderEditorPage';
 import { DoctorPartnersPage } from './pages/DoctorPartnersPage';
 import { PatientsPage } from './pages/PatientsPage';
+import { InvoicesPage } from './pages/InvoicesPage';
+import { ReportsPage } from './pages/ReportsPage';
+import { UsersPage } from './pages/UsersPage';
 
 export function App() {
   const { user, loading } = useAuth();
@@ -37,6 +40,9 @@ export function App() {
         <Route path="/work-orders/:workOrderId" element={<WorkOrderEditorPage />} />
         <Route path="/doctors" element={<DoctorPartnersPage />} />
         <Route path="/patients" element={<PatientsPage />} />
+        <Route path="/invoices" element={<InvoicesPage />} />
+        <Route path="/reports" element={<ReportsPage />} />
+        <Route path="/users" element={<UsersPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Layout>

@@ -6,6 +6,9 @@ import { authRoutes } from './routes/auth.js';
 import { doctorPartnerRoutes } from './routes/doctorPartners.js';
 import { patientRoutes } from './routes/patients.js';
 import { workOrderRoutes } from './routes/workOrders.js';
+import { invoiceRoutes } from './routes/invoices.js';
+import { reportRoutes } from './routes/reports.js';
+import { userRoutes } from './routes/users.js';
 
 // ─── Prisma ────────────────────────────────────────────────────────
 
@@ -110,6 +113,9 @@ await app.register(authRoutes, { prefix: '/auth' });
 await app.register(doctorPartnerRoutes, { prefix: '/doctor-partners' });
 await app.register(patientRoutes, { prefix: '/patients' });
 await app.register(workOrderRoutes, { prefix: '/work-orders' });
+await app.register(invoiceRoutes, { prefix: '/invoices' });
+await app.register(reportRoutes, { prefix: '/reports' });
+await app.register(userRoutes, { prefix: '/users' });
 
 // Health check
 app.get('/health', async () => ({ status: 'ok', timestamp: new Date().toISOString() }));
