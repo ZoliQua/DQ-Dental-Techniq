@@ -11,6 +11,14 @@ export type {
   LabWorkOrderStatusChange,
 } from './core/types';
 
+export type {
+  BridgeWorkOrderSubmit,
+  BridgeWorkOrderResponse,
+  BridgeWorkOrderItem,
+  BridgeStatusUpdate,
+  BridgeLabInfo,
+} from './core/bridge-types';
+
 export { ALL_STATUSES, SHADE_OPTIONS } from './core/constants';
 
 // ─── Shared components ───────────────────────────────────────────
@@ -36,3 +44,13 @@ export { LabWorkOrdersPage } from './integrated/pages/LabWorkOrdersPage';
 export { LabWorkOrderEditorPage } from './integrated/pages/LabWorkOrderEditorPage';
 export { generateWorksheetPdf } from './integrated/components/PrintableWorksheet';
 export { useLabWorkOrders } from './integrated/hooks/useLabWorkOrders';
+
+// ─── Bridge (connect clinic to external standalone lab) ──────────
+export type { LabBridgeConfig } from './integrated/bridge';
+export {
+  getLabInfo,
+  submitWorkOrder,
+  getWorkOrderStatus,
+  listWorkOrders,
+  pollStatusUpdates,
+} from './integrated/bridge';

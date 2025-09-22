@@ -10,4 +10,12 @@ export type {
   LabWorkOrderStatusChange,
 } from './types';
 
+export type {
+  BridgeWorkOrderSubmit,
+  BridgeWorkOrderResponse,
+  BridgeWorkOrderItem,
+  BridgeStatusUpdate,
+  BridgeLabInfo,
+} from './bridge-types';
+
 export { ALL_STATUSES, SHADE_OPTIONS } from './constants';

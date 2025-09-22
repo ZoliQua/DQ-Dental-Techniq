@@ -50,6 +50,20 @@ model AuthSession {
   @@map("auth_sessions")
 }
 
+// ─── External API Keys ──────────────────────────────────────────
+
+model ApiKey {
+  apiKeyId    String    @id
+  name        String
+  keyHash     String    @unique
+  permissions String    @default("work_orders")
+  isActive    Boolean   @default(true)
+  lastUsedAt  DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@map("api_keys")
+}
+
 // ─── Üzleti modellek ──────────────────────────────────────────────
 
 model DoctorPartner {
@@ -125,6 +139,7 @@ model LabWorkOrder {
   currency        String             @default("HUF")
   createdAt       DateTime           @default(now())
   updatedAt       DateTime           @updatedAt
+  externalRef     String?
   createdByUserId String?
   createdBy       LabUser?           @relation("CreatedBy", fields: [createdByUserId], references: [userId])
 
@@ -134,6 +149,7 @@ model LabWorkOrder {
   @@index([doctorPartnerId])
   @@index([status])
   @@index([createdAt])
+  @@index([externalRef])
   @@map("lab_work_orders")
 }
 
