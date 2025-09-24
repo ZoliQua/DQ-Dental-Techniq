@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { apiFetch } from '../context/AuthContext';
 import { useI18n } from '../context/I18nContext';
 import { StatusBadge } from '../components/StatusBadge';
+import { generateWorkOrderPdf } from '../utils/generateWorkOrderPdf';
 
 const SHADE_OPTIONS = [
   'A1','A2','A3','A3.5','A4','B1','B2','B3','B4',
@@ -193,8 +194,12 @@ export function WorkOrderEditorPage() {
             <span className="px-2 py-0.5 bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-200 text-xs rounded font-medium">{t.workOrders.urgent}</span>
           )}
         </div>
-        {isEditing && nextStatuses.length > 0 && (
+        {isEditing && (
           <div className="flex gap-2">
+            <button onClick={() => generateWorkOrderPdf({ order, t })}
+              className="px-3 py-1.5 text-sm font-medium rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 transition-colors">
+              {t.workOrders.printPdf}
+            </button>
             {nextStatuses.map((s) => (
               <button key={s} onClick={() => { setNewStatus(s); setStatusNote(''); setStatusModalOpen(true); }}
                 className="px-3 py-1.5 text-sm font-medium rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors">
@@ -204,6 +209,8 @@ export function WorkOrderEditorPage() {
           </div>
         )}
       </div>
+
+
 
       <form onSubmit={handleSave} className="space-y-6">
         {/* Patient + Doctor */}

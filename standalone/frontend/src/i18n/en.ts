@@ -98,6 +98,7 @@ export const en: TranslationKeys = {
     lineTotal: 'Line total',
     addItem: 'Add item',
     currency: 'Currency',
+    printPdf: 'Print PDF',
   },
   statuses: {
     draft: 'Draft',
@@ -164,6 +165,7 @@ export const en: TranslationKeys = {
     markIssued: 'Mark as issued',
     markPaid: 'Mark as paid',
     markCancelled: 'Cancel',
+    printPdf: 'Invoice PDF',
   },
   reports: {
     title: 'Reports',

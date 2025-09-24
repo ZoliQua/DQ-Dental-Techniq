@@ -96,6 +96,7 @@ export const hu = {
     lineTotal: 'Összesen',
     addItem: 'Tétel hozzáadása',
     currency: 'Pénznem',
+    printPdf: 'PDF nyomtatás',
   },
   statuses: {
     draft: 'Piszkozat',
@@ -162,6 +163,7 @@ export const hu = {
     markIssued: 'Kiállítás',
     markPaid: 'Fizetve jelölés',
     markCancelled: 'Sztornó',
+    printPdf: 'Számla PDF',
   },
   reports: {
     title: 'Riportok',

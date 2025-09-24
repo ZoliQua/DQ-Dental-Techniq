@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { apiFetch } from '../context/AuthContext';
 import { useI18n } from '../context/I18nContext';
+import { generateInvoicePdf } from '../utils/generateInvoicePdf';
 
 interface DoctorPartner { doctorPartnerId: string; doctorName: string; clinicName: string | null; }
 interface InvoiceItem { itemId: string; description: string; quantity: number; unitPrice: number; totalPrice: number; workOrderId: string | null; }
@@ -127,6 +128,9 @@ export function InvoicesPage() {
                   <td className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">{inv.issueDate?.slice(0, 10)}</td>
                   <td className="px-4 py-3 text-sm text-right font-medium text-gray-900 dark:text-gray-100">{formatAmount(inv.totalAmount, inv.currency)}</td>
                   <td className="px-4 py-3 text-right space-x-1">
+                    {inv.status !== 'cancelled' && (
+                      <button onClick={() => generateInvoicePdf({ invoice: inv, t })} className="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-md">{t.invoices.printPdf}</button>
+                    )}
                     {inv.status === 'draft' && (
                       <>
                         <button onClick={() => openEdit(inv)} className="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-md">{t.common.edit}</button>

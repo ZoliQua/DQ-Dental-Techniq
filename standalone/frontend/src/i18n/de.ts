@@ -98,6 +98,7 @@ export const de: TranslationKeys = {
     lineTotal: 'Zeilensumme',
     addItem: 'Position hinzufügen',
     currency: 'Währung',
+    printPdf: 'PDF drucken',
   },
   statuses: {
     draft: 'Entwurf',
@@ -164,6 +165,7 @@ export const de: TranslationKeys = {
     markIssued: 'Als ausgestellt markieren',
     markPaid: 'Als bezahlt markieren',
     markCancelled: 'Stornieren',
+    printPdf: 'Rechnung PDF',
   },
   reports: {
     title: 'Berichte',
