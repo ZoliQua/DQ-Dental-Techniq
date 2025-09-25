@@ -1,15 +1,25 @@
 import jsPDF from 'jspdf';
+import { robotoRegularBase64 } from './fonts/robotoRegular';
+import { robotoBoldBase64 } from './fonts/robotoBold';
 
-// ─── Hungarian character transliteration for jsPDF built-in fonts ──
-// jsPDF's built-in helvetica only supports Latin-1 (ISO 8859-1).
-// ő/ű are outside this range, so we map them to ö/ü.
+// ─── Roboto font registration ──────────────────────────────────────
+// Roboto supports full Hungarian character set (á, é, í, ó, ö, ő, ú, ü, ű).
 
-const CHAR_MAP: Record<string, string> = {
-  'ő': 'ö', 'Ő': 'Ö', 'ű': 'ü', 'Ű': 'Ü',
-};
+const FONT_FAMILY = 'Roboto';
 
+function registerFonts(doc: jsPDF) {
+  doc.addFileToVFS('Roboto-Regular.ttf', robotoRegularBase64);
+  doc.addFont('Roboto-Regular.ttf', FONT_FAMILY, 'normal');
+  doc.addFileToVFS('Roboto-Bold.ttf', robotoBoldBase64);
+  doc.addFont('Roboto-Bold.ttf', FONT_FAMILY, 'bold');
+  doc.setFont(FONT_FAMILY, 'normal');
+}
+
+// ─── Text helpers ───────────────────────────────────────────────────
+
+/** Pass-through — Roboto renders all Hungarian characters natively */
 export function pdfText(text: string): string {
-  return text.replace(/[őŐűŰ]/g, (ch) => CHAR_MAP[ch] || ch);
+  return text;
 }
 
 export function formatPdfDate(dateString: string): string {
@@ -39,7 +49,7 @@ export interface PdfCtx {
 
 export function createPdfCtx(): PdfCtx {
   const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-  doc.setFont('helvetica', 'normal');
+  registerFonts(doc);
   const pageWidth = doc.internal.pageSize.getWidth();
   const margin = 15;
   return {
@@ -59,20 +69,20 @@ export function drawLine(ctx: PdfCtx) {
 }
 
 export function bold(ctx: PdfCtx, size = 10) {
-  ctx.doc.setFont('helvetica', 'bold');
+  ctx.doc.setFont(FONT_FAMILY, 'bold');
   ctx.doc.setFontSize(size);
 }
 
 export function normal(ctx: PdfCtx, size = 9) {
-  ctx.doc.setFont('helvetica', 'normal');
+  ctx.doc.setFont(FONT_FAMILY, 'normal');
   ctx.doc.setFontSize(size);
 }
 
 export function labelValue(ctx: PdfCtx, label: string, value: string, x: number, labelWidth = 28) {
   bold(ctx, 9);
-  ctx.doc.text(pdfText(label), x, ctx.y);
+  ctx.doc.text(label, x, ctx.y);
   normal(ctx, 9);
-  ctx.doc.text(pdfText(value), x + labelWidth, ctx.y);
+  ctx.doc.text(value, x + labelWidth, ctx.y);
 }
 
 export function checkbox(ctx: PdfCtx, checked: boolean, label: string, x: number) {
@@ -86,7 +96,7 @@ export function checkbox(ctx: PdfCtx, checked: boolean, label: string, x: number
     ctx.doc.setLineWidth(0.3);
   }
   normal(ctx, 8);
-  ctx.doc.text(pdfText(label), x + 5, ctx.y);
+  ctx.doc.text(label, x + 5, ctx.y);
 }
 
 export function ensureSpace(ctx: PdfCtx, needed: number) {

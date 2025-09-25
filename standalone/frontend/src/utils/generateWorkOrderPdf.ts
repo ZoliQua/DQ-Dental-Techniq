@@ -1,6 +1,6 @@
 import type { TranslationKeys } from '../i18n/hu';
 import {
-  pdfText, formatPdfDate, formatPdfCurrency,
+  formatPdfDate, formatPdfCurrency,
   createPdfCtx, drawLine, bold, normal, labelValue, checkbox, ensureSpace,
 } from './pdf';
 
@@ -18,19 +18,19 @@ export function generateWorkOrderPdf({ order, labName, t }: WorkOrderPdfData) {
   // ─── Title ──────────────────────────────────────────────────────────
 
   bold(ctx, 16);
-  doc.text(pdfText('FOGTECHNIKAI MUNKALAP'), ctx.rightCol, ctx.y + 2, { align: 'right' });
+  doc.text('FOGTECHNIKAI MUNKALAP', ctx.rightCol, ctx.y + 2, { align: 'right' });
 
   bold(ctx, 11);
-  doc.text(pdfText(labName || 'DQ Dental Techniq'), margin, ctx.y);
+  doc.text(labName || 'DQ Dental Techniq', margin, ctx.y);
   ctx.y += 6;
 
   bold(ctx, 10);
-  doc.text(pdfText(order.workOrderNumber), ctx.rightCol, ctx.y, { align: 'right' });
+  doc.text(order.workOrderNumber, ctx.rightCol, ctx.y, { align: 'right' });
 
   if (order.priority === 'urgent') {
     doc.setTextColor(220, 38, 38);
     bold(ctx, 10);
-    doc.text(pdfText(t.workOrders.urgent.toUpperCase()), ctx.rightCol, ctx.y + 5, { align: 'right' });
+    doc.text(t.workOrders.urgent.toUpperCase(), ctx.rightCol, ctx.y + 5, { align: 'right' });
     doc.setTextColor(0, 0, 0);
   }
 
@@ -41,26 +41,26 @@ export function generateWorkOrderPdf({ order, labName, t }: WorkOrderPdfData) {
   // ─── Doctor + Lab info ──────────────────────────────────────────────
 
   bold(ctx, 9);
-  doc.text(pdfText(t.workOrders.doctor.toUpperCase()), margin, ctx.y);
-  doc.text(pdfText('LABOR'), midX, ctx.y);
+  doc.text(t.workOrders.doctor.toUpperCase(), margin, ctx.y);
+  doc.text('LABOR', midX, ctx.y);
   ctx.y += 5;
 
   normal(ctx, 9);
   if (order.doctorPartner) {
-    doc.text(pdfText(order.doctorPartner.doctorName), margin, ctx.y);
+    doc.text(order.doctorPartner.doctorName, margin, ctx.y);
     if (order.doctorPartner.clinicName) {
       ctx.y += 4;
-      doc.text(pdfText(order.doctorPartner.clinicName), margin, ctx.y);
+      doc.text(order.doctorPartner.clinicName, margin, ctx.y);
     }
     if (order.doctorPartner.phone) {
       ctx.y += 4;
-      doc.text(pdfText(`Tel: ${order.doctorPartner.phone}`), margin, ctx.y);
+      doc.text(`Tel: ${order.doctorPartner.phone}`, margin, ctx.y);
     }
   }
 
   // Lab side
   const labY = ctx.y - (order.doctorPartner?.clinicName ? 8 : 4);
-  doc.text(pdfText(labName || 'DQ Dental Techniq'), midX, labY);
+  doc.text(labName || 'DQ Dental Techniq', midX, labY);
 
   ctx.y += 7;
   drawLine(ctx);
@@ -69,14 +69,14 @@ export function generateWorkOrderPdf({ order, labName, t }: WorkOrderPdfData) {
   // ─── Patient ────────────────────────────────────────────────────────
 
   bold(ctx, 9);
-  doc.text(pdfText(t.workOrders.patient.toUpperCase()), margin, ctx.y);
+  doc.text(t.workOrders.patient.toUpperCase(), margin, ctx.y);
   ctx.y += 5;
 
   if (order.patient) {
     labelValue(ctx, `${t.patients.lastName}:`, `${order.patient.lastName} ${order.patient.firstName}`, margin, 25);
     if (order.patient.birthDate) {
       normal(ctx, 9);
-      doc.text(pdfText(`${t.patients.birthDate}: ${order.patient.birthDate}`), midX, ctx.y);
+      doc.text(`${t.patients.birthDate}: ${order.patient.birthDate}`, midX, ctx.y);
     }
   }
   ctx.y += 7;
@@ -86,7 +86,7 @@ export function generateWorkOrderPdf({ order, labName, t }: WorkOrderPdfData) {
   // ─── Technical details ──────────────────────────────────────────────
 
   bold(ctx, 9);
-  doc.text(pdfText(t.workOrders.toothNotation.toUpperCase()), margin, ctx.y);
+  doc.text(t.workOrders.toothNotation.toUpperCase(), margin, ctx.y);
   ctx.y += 6;
 
   if (order.shade) labelValue(ctx, `${t.workOrders.shade}:`, order.shade, margin, 18);
@@ -108,7 +108,7 @@ export function generateWorkOrderPdf({ order, labName, t }: WorkOrderPdfData) {
   // ─── Items table ────────────────────────────────────────────────────
 
   bold(ctx, 9);
-  doc.text(pdfText(t.workOrders.items.toUpperCase()), margin, ctx.y);
+  doc.text(t.workOrders.items.toUpperCase(), margin, ctx.y);
   ctx.y += 6;
 
   const cols = {
@@ -125,11 +125,11 @@ export function generateWorkOrderPdf({ order, labName, t }: WorkOrderPdfData) {
 
   bold(ctx, 8);
   doc.text('#', cols.nr, ctx.y);
-  doc.text(pdfText(t.workOrders.tooth), cols.tooth, ctx.y);
-  doc.text(pdfText(t.workOrders.description), cols.desc, ctx.y);
-  doc.text(pdfText(t.workOrders.quantity), cols.qty, ctx.y);
-  doc.text(pdfText(t.workOrders.unitPrice), cols.unit, ctx.y);
-  doc.text(pdfText(t.workOrders.lineTotal), cols.total, ctx.y, { align: 'right' });
+  doc.text(t.workOrders.tooth, cols.tooth, ctx.y);
+  doc.text(t.workOrders.description, cols.desc, ctx.y);
+  doc.text(t.workOrders.quantity, cols.qty, ctx.y);
+  doc.text(t.workOrders.unitPrice, cols.unit, ctx.y);
+  doc.text(t.workOrders.lineTotal, cols.total, ctx.y, { align: 'right' });
   ctx.y += 5;
 
   const items: any[] = order.items || [];
@@ -140,9 +140,9 @@ export function generateWorkOrderPdf({ order, labName, t }: WorkOrderPdfData) {
 
     const lineTotal = (item.unitPrice ?? 0) * item.quantity;
     doc.text(String(i + 1), cols.nr, ctx.y);
-    doc.text(pdfText(item.tooth || '—'), cols.tooth, ctx.y);
+    doc.text(item.tooth || '—', cols.tooth, ctx.y);
 
-    const descLines = doc.splitTextToSize(pdfText(item.description), cols.qty - cols.desc - 3);
+    const descLines = doc.splitTextToSize(item.description, cols.qty - cols.desc - 3);
     doc.text(descLines, cols.desc, ctx.y);
 
     doc.text(String(item.quantity), cols.qty, ctx.y);
@@ -158,8 +158,8 @@ export function generateWorkOrderPdf({ order, labName, t }: WorkOrderPdfData) {
   doc.line(cols.qty - 5, ctx.y, ctx.rightCol, ctx.y);
   ctx.y += 5;
   bold(ctx, 10);
-  doc.text(pdfText(`${t.workOrders.total}:`), cols.unit - 18, ctx.y);
-  doc.text(pdfText(formatPdfCurrency(order.totalPrice ?? 0, order.currency)), cols.total, ctx.y, { align: 'right' });
+  doc.text(`${t.workOrders.total}:`, cols.unit - 18, ctx.y);
+  doc.text(formatPdfCurrency(order.totalPrice ?? 0, order.currency), cols.total, ctx.y, { align: 'right' });
   ctx.y += 8;
 
   // ─── Notes ──────────────────────────────────────────────────────────
@@ -169,10 +169,10 @@ export function generateWorkOrderPdf({ order, labName, t }: WorkOrderPdfData) {
     drawLine(ctx);
     ctx.y += 2;
     bold(ctx, 9);
-    doc.text(pdfText(t.workOrders.notes.toUpperCase()), margin, ctx.y);
+    doc.text(t.workOrders.notes.toUpperCase(), margin, ctx.y);
     ctx.y += 5;
     normal(ctx, 8);
-    const noteLines = doc.splitTextToSize(pdfText(order.notes), ctx.contentWidth);
+    const noteLines = doc.splitTextToSize(order.notes, ctx.contentWidth);
     doc.text(noteLines, margin, ctx.y);
     ctx.y += noteLines.length * 4 + 3;
   }
@@ -180,10 +180,10 @@ export function generateWorkOrderPdf({ order, labName, t }: WorkOrderPdfData) {
   if (order.labNotes) {
     ensureSpace(ctx, 20);
     bold(ctx, 9);
-    doc.text(pdfText(t.workOrders.labNotes.toUpperCase()), margin, ctx.y);
+    doc.text(t.workOrders.labNotes.toUpperCase(), margin, ctx.y);
     ctx.y += 5;
     normal(ctx, 8);
-    const labLines = doc.splitTextToSize(pdfText(order.labNotes), ctx.contentWidth);
+    const labLines = doc.splitTextToSize(order.labNotes, ctx.contentWidth);
     doc.text(labLines, margin, ctx.y);
     ctx.y += labLines.length * 4 + 3;
   }
@@ -195,14 +195,14 @@ export function generateWorkOrderPdf({ order, labName, t }: WorkOrderPdfData) {
     ctx.y += 3;
     if (order.requestedDeadline) {
       bold(ctx, 9);
-      doc.text(pdfText(`${t.workOrders.requestedDeadline}:`), margin, ctx.y);
+      doc.text(`${t.workOrders.requestedDeadline}:`, margin, ctx.y);
       normal(ctx, 9);
       doc.text(formatPdfDate(order.requestedDeadline), margin + 45, ctx.y);
       ctx.y += 5;
     }
     if (order.promisedDeadline) {
       bold(ctx, 9);
-      doc.text(pdfText(`${t.workOrders.promisedDeadline}:`), margin, ctx.y);
+      doc.text(`${t.workOrders.promisedDeadline}:`, margin, ctx.y);
       normal(ctx, 9);
       doc.text(formatPdfDate(order.promisedDeadline), margin + 45, ctx.y);
       ctx.y += 5;
@@ -220,7 +220,7 @@ export function generateWorkOrderPdf({ order, labName, t }: WorkOrderPdfData) {
   }
 
   normal(ctx, 9);
-  doc.text(pdfText(`${t.invoices.issueDate}: ${formatPdfDate(new Date().toISOString())}`), margin, ctx.y);
+  doc.text(`${t.invoices.issueDate}: ${formatPdfDate(new Date().toISOString())}`, margin, ctx.y);
   ctx.y += 12;
 
   const sigLineWidth = 55;
@@ -233,7 +233,7 @@ export function generateWorkOrderPdf({ order, labName, t }: WorkOrderPdfData) {
   ctx.y += 4;
 
   normal(ctx, 8);
-  doc.text(pdfText(t.workOrders.doctor), sigLeftX + sigLineWidth / 2, ctx.y, { align: 'center' });
+  doc.text(t.workOrders.doctor, sigLeftX + sigLineWidth / 2, ctx.y, { align: 'center' });
   doc.text('Labor', sigRightX + sigLineWidth / 2, ctx.y, { align: 'center' });
 
   // ─── Save ───────────────────────────────────────────────────────────
