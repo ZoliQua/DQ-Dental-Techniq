@@ -64,6 +64,22 @@ model ApiKey {
   @@map("api_keys")
 }
 
+// ─── Lab Settings ───────────────────────────────────────────────
+
+model LabSettings {
+  id          Int      @id @default(1)
+  labName     String   @default("DQ Dental Techniq")
+  address     String?
+  phone       String?
+  email       String?
+  taxNumber   String?
+  bankAccount String?
+  notes       String?
+  updatedAt   DateTime @updatedAt
+
+  @@map("lab_settings")
+}
+
 // ─── Üzleti modellek ──────────────────────────────────────────────
 
 model DoctorPartner {

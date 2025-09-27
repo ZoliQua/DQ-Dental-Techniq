@@ -13,6 +13,7 @@ function mockModel() {
     updateMany: vi.fn(),
     aggregate: vi.fn(),
     groupBy: vi.fn(),
+    upsert: vi.fn(),
   };
 }
 
@@ -26,6 +27,7 @@ export const prisma: any = {
   labInvoice: mockModel(),
   labInvoiceItem: mockModel(),
   apiKey: mockModel(),
+  labSettings: mockModel(),
 };
 
 let idCounter = 0;
